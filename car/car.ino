@@ -8,7 +8,6 @@ void setup() {
     us_init();
     navi_init();
     motion_init();
-    pinMode(A8,INPUT);
 }
 
 void loop() {
