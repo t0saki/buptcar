@@ -17,7 +17,11 @@ void loop() {
     } else {
         digitalWrite(red,LOW);
     }
-    navi_loop();
-
+    //navi_loop();
+    forward(255);
+    if (us_distance()<32) {
+        stop();
+        turn(255);
+    }
     delay(50);
 }
