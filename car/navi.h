@@ -10,11 +10,22 @@ void navi_init() {
     }
 }
 
+int sensor[5];
+
 void navi_loop() {
     for (auto i = 0;i<n_navi;i++) {
-        Serial.print(digitalRead(hw[i]));
+        sensor[i] = digitalRead(hw[i]);
         //Serial.print(' ');
     }
-    Serial.print('\n');
-    run(0);
+    if (!sensor[0]) {
+        turn(-255);
+    } else if (!sensor[1]) {
+        turn(-127);
+    } else if (!sensor[3]) {
+        turn(127);
+    } else if (!sensor[4]) {
+        turn(255);
+    } else {
+        forward(255);
+    }
 }

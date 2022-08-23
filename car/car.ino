@@ -17,7 +17,7 @@ void loop() {
     } else {
         digitalWrite(red,LOW);
     }
-    Serial.println(analogRead(A8));
     navi_loop();
-    delay(100);
+
+    delay(50);
 }
