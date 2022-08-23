@@ -1,27 +1,23 @@
 #include "pins.h"
 
-void us_init() {
-    pinMode(trig,OUTPUT);
-    pinMode(echo,INPUT);
-    pinMode(red,OUTPUT);
-    digitalWrite(trig,LOW);
-    digitalWrite(red,LOW);
+void us_init()
+{
+    // Ultra sonic pinout init
+    pinMode(ULTRA_SONIC_TRIGGER, OUTPUT);
+    pinMode(ULTRA_SONIC_ECHO, INPUT);
+    pinMode(BEEPER, OUTPUT);
+    digitalWrite(ULTRA_SONIC_TRIGGER, LOW);
 }
 
-void us_loop() {
-    digitalWrite(trig,HIGH);
-    delayMicroseconds(4);
-    digitalWrite(trig,LOW);
-    long duration = pulseIn(echo,HIGH);
-    float distance = duration/58.2;
-    delay(1000);
-}
-
-int us_distance() {
-    digitalWrite(trig,HIGH);
-    delayMicroseconds(4);
-    digitalWrite(trig,LOW);
-    long duration = pulseIn(echo,HIGH);
-    float distance = duration/58.2;
+int us_distance()
+{
+    digitalWrite(ULTRA_SONIC_TRIGGER, LOW);
+    delayMicroseconds(2);
+    digitalWrite(ULTRA_SONIC_TRIGGER, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(ULTRA_SONIC_TRIGGER, LOW);
+    delayMicroseconds(2);
+    long duration = pulseIn(ULTRA_SONIC_ECHO, HIGH);
+    float distance = duration / 58.2f;
     return distance;
 }
