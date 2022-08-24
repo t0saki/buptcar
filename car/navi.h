@@ -12,7 +12,7 @@ void pinout_init_navigation() {
 
 int sensor[n_navi];
 
-float Kp = 30,Ki = 10,Kd = 1;
+float Kp = 30,Ki = 16,Kd = 4;
 float error = 0,P = 0,I = 0,D = 0,PID_value = 0;
 float previous_error = 0,previous_I = 0;
 
@@ -51,7 +51,7 @@ float navi_loop() {
 **/
     error = 0;
     for (auto i = 0; i<n_navi; i++) {
-        error += -sensor[i]*(i-2);
+        error += -sensor[i]*(i-(n_navi/2));
     }
     P = error;
     I = I+previous_I;
