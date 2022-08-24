@@ -18,4 +18,6 @@
 
 #define BEEPER_PIN 46 // Beeper
 
+#define BUTTON_IN1 34 // Button
+
 extern int hw[5];

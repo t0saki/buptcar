@@ -4,6 +4,7 @@
 #include "navi.h"
 #include "rgb_led.h"
 #include "beeper.h"
+#include "button.h"
 
 void setup() {
     Serial.begin(9600);
@@ -13,6 +14,8 @@ void setup() {
     pinout_init_beeper();
     pinout_init_motor();
     pinout_init_navigation();
+    pinin_init_button();
+    waiting_for_press();
 }
 
 void loop() {
@@ -21,9 +24,15 @@ void loop() {
     // Serial.print(sonic_distance);
     // Serial.println();
 
+    if (digitalRead(BUTTON_IN1)==LOW) {
+        stop();
+        delay(1000);
+        waiting_for_press();
+    }
+
     navi_loop();
 
-    if (sonic_distance<24) {
+    if (sonic_distance<32) {
         rgb_setcolor(28,231,234);
         beep(2000);
         // stop();
