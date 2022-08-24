@@ -2,43 +2,68 @@
 #include "motion.h"
 
 const int n_navi = 5;
-int hw[5] = {24, 25, 26, 27, 28};
+int hw[n_navi] = { 24, 25, 26, 27, 28 };
 
-void pinout_init_navigation()
-{
-    for (auto i = 0; i < n_navi; i++)
-    {
-        pinMode(hw[i], INPUT);
+void pinout_init_navigation() {
+    for (auto i = 0; i<n_navi; i++) {
+        pinMode(hw[i],INPUT);
     }
 }
 
-int sensor[5];
+int sensor[n_navi];
 
-void navi_loop()
-{
-    for (auto i = 0; i < n_navi; i++)
-    {
+float Kp = 30,Ki = 10,Kd = 1;
+float error = 0,P = 0,I = 0,D = 0,PID_value = 0;
+float previous_error = 0,previous_I = 0;
+
+void get_sensor() {
+    for (auto i = 0; i<n_navi; i++) {
         sensor[i] = digitalRead(hw[i]);
-        // Serial.print(' ');
     }
-    if (!sensor[0])
-    {
-        turn(-255);
+}
+
+float navi_loop() {
+    get_sensor();
+    /**
+    if (sensor[0]==0&&sensor[1]!=0&&sensor[2]!=0&&sensor[3]!=0&&sensor[4]!=0) {
+        error = -2;
+    } else if (sensor[0]==0&&sensor[1]==0&&sensor[2]!=0&&sensor[3]!=0&&sensor[4]!=0) {
+        error = -2;
+    } else if (sensor[1]==0&&sensor[0]!=0&&sensor[2]!=0&&sensor[3]!=0&&sensor[4]!=0) {
+        error = -1;
+    } else if (sensor[1]==0&&sensor[0]!=0&&sensor[2]==0&&sensor[3]!=0&&sensor[4]!=0) {
+        error = -1;
+    } else if (sensor[2]==0&&sensor[1]!=0&&sensor[0]!=0&&sensor[3]!=0&&sensor[4]!=0) {
+        error = 0;
+    } else if (sensor[2]==0&&sensor[1]==0&&sensor[0]!=0&&sensor[3]==0&&sensor[4]!=0) {
+        error = 0;
+    } else if (sensor[3]==0&&sensor[1]!=0&&sensor[2]!=0&&sensor[0]!=0&&sensor[4]!=0) {
+        error = 1;
+    } else if (sensor[3]==0&&sensor[1]!=0&&sensor[2]==0&&sensor[0]!=0&&sensor[4]!=0) {
+        error = 1;
+    } else if (sensor[4]==0&&sensor[1]!=0&&sensor[2]!=0&&sensor[3]==0&&sensor[0]!=0) {
+        error = 2;
+    } else if (sensor[4]==0&&sensor[1]!=0&&sensor[2]!=0&&sensor[3]!=0&&sensor[0]!=0) {
+        error = 2;
+    } else {
+        error = 0;
     }
-    else if (!sensor[1])
-    {
-        turn(-127);
+**/
+    error = 0;
+    for (auto i = 0; i<n_navi; i++) {
+        error += -sensor[i]*(i-2);
     }
-    else if (!sensor[3])
-    {
-        turn(127);
-    }
-    else if (!sensor[4])
-    {
-        turn(255);
-    }
-    else
-    {
-        forward(255);
-    }
+    P = error;
+    I = I+previous_I;
+    D = error-previous_error;
+    PID_value = (Kp*P)+(Ki*I)+(Kd*D);
+    previous_I = I;
+    previous_error = error;
+    turn(-PID_value/90);
+    Serial.print(PID_value);
+    Serial.print(" ");
+    Serial.println(error);
+
+    return PID_value;
+
 }

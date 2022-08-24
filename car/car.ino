@@ -1,7 +1,7 @@
 // #include "bt_serial.h"
 #include "pins.h"
 #include "ultrasonic.h"
-#include "navi2.h"
+#include "navi.h"
 #include "rgb_led.h"
 #include "beeper.h"
 
@@ -17,9 +17,9 @@ void setup() {
 
 void loop() {
     float sonic_distance = us_distance();
-    Serial.print("Sonic dist (cm): ");
-    Serial.print(sonic_distance);
-    Serial.println();
+    // Serial.print("Sonic dist (cm): ");
+    // Serial.print(sonic_distance);
+    // Serial.println();
 
     navi_loop();
 
@@ -38,7 +38,7 @@ void loop() {
     //     turn(255);
     // }
 
-    // delay(50);
+    delay(50);
 
     // forward(255);
 }
