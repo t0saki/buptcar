@@ -3,6 +3,7 @@
 
 const int n_navi = 5;
 int hw[n_navi] = { 24, 25, 26, 27, 28 };
+const int errorpins[n_navi]{ -3,-1,0,1,3 };
 
 void pinout_init_navigation() {
     for (auto i = 0; i<n_navi; i++) {
