@@ -1,7 +1,7 @@
 #pragma once
 
 #define ULTRA_SONIC_TRIGGER 52 // Sonic trigger
-#define ULTRA_SONIC_ECHO 53 // Sonic echo
+#define ULTRA_SONIC_ECHO 53    // Sonic echo
 
 #define RGB_B 42 // RGB - Blue
 #define RGB_R 43 // RGB - Red
@@ -15,5 +15,7 @@
 #define MOTOR_IN2 3
 #define MOTOR_IN3 4
 #define MOTOR_IN4 5
+
+#define BEEPER_PIN 46 // Beeper
 
 extern int hw[5];

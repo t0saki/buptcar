@@ -16,7 +16,7 @@ void l_wheel(int s)
     analogWrite(MOTOR_IN4, 0);
 }
 
-void motion_init()
+void pinout_init_motor()
 {
     pinMode(MOTOR_IN1, OUTPUT);
     pinMode(MOTOR_IN2, OUTPUT);

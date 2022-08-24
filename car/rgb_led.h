@@ -9,7 +9,7 @@ void rgb_setcolor(int r, int g, int b)
     analogWrite(RGB_B, b);
 }
 
-void rgb_pinout_init()
+void pinout_init_rgb()
 {
     // RGB init
     pinMode(RGB_B, OUTPUT);

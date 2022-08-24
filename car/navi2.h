@@ -12,33 +12,20 @@ void pinout_init_navigation()
     }
 }
 
-int sensor[5];
+int sensor[5], turn_rate = 0;
 
 void navi_loop()
 {
+    turn_rate = 0;
+
     for (auto i = 0; i < n_navi; i++)
     {
         sensor[i] = digitalRead(hw[i]);
-        // Serial.print(' ');
+        turn_rate += -85 * sensor[i] * (i - 2);
+
+        Serial.print(sensor[i]);
+        Serial.print(" ");
     }
-    if (!sensor[0])
-    {
-        turn(-255);
-    }
-    else if (!sensor[1])
-    {
-        turn(-127);
-    }
-    else if (!sensor[3])
-    {
-        turn(127);
-    }
-    else if (!sensor[4])
-    {
-        turn(255);
-    }
-    else
-    {
-        forward(255);
-    }
+    Serial.println(turn_rate);
+    turn(turn_rate);
 }

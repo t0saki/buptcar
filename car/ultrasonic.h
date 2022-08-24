@@ -1,6 +1,6 @@
 #include "pins.h"
 
-void us_init()
+void pinout_init_ultrasonic()
 {
     // Ultra sonic pinout init
     pinMode(ULTRA_SONIC_TRIGGER, OUTPUT);
