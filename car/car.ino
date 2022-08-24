@@ -47,7 +47,7 @@ void loop() {
     //     turn(255);
     // }
 
-    delay(50);
+    delay(5);
 
     // forward(255);
 }

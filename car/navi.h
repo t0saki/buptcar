@@ -12,7 +12,7 @@ void pinout_init_navigation() {
 
 int sensor[n_navi];
 
-float Kp = 30,Ki = 16,Kd = 4;
+float Kp = 24,Ki = 16,Kd = 1;
 float error = 0,P = 0,I = 0,D = 0,PID_value = 0;
 float previous_error = 0,previous_I = 0;
 
@@ -51,7 +51,8 @@ float navi_loop() {
 **/
     error = 0;
     for (auto i = 0; i<n_navi; i++) {
-        error += -sensor[i]*(i-(n_navi/2));
+        error -= sensor[i]*(i-2);
+        Serial.print(sensor[i]);
     }
     P = error;
     I = I+previous_I;
@@ -59,7 +60,8 @@ float navi_loop() {
     PID_value = (Kp*P)+(Ki*I)+(Kd*D);
     previous_I = I;
     previous_error = error;
-    turn(-PID_value/90);
+    turn(PID_value/90);
+    Serial.print("");
     Serial.print(PID_value);
     Serial.print(" ");
     Serial.println(error);
