@@ -5,8 +5,7 @@
 #include "rgb_led.h"
 #include "beeper.h"
 
-void setup()
-{
+void setup() {
     Serial.begin(9600);
 
     pinout_init_ultrasonic();
@@ -16,26 +15,22 @@ void setup()
     pinout_init_navigation();
 }
 
-void loop()
-{
+void loop() {
     float sonic_distance = us_distance();
     Serial.print("Sonic dist (cm): ");
     Serial.print(sonic_distance);
     Serial.println();
 
-    if (sonic_distance < 24)
-    {
-        rgb_setcolor(28, 231, 234);
+    navi_loop();
+
+    if (sonic_distance<24) {
+        rgb_setcolor(28,231,234);
         beep(2000);
-    }
-    else
-    {
-        rgb_setcolor(0, 0, 0);
-        digitalWrite(BEEPER, LOW);
+        // stop();
+    } else {
+        rgb_setcolor(0,0,0);
         silent();
     }
-
-    navi_loop();
     // forward(255);
     // if (sonic_distance < 32)
     // {
