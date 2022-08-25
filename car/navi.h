@@ -1,6 +1,8 @@
 #pragma once
 #include "motion.h"
 #include "pins.h"
+#include "rgb_led.h"
+#include "beeper.h"
 
 const int n_navi = 5;
 int hw[n_navi] = { 24, 25, 26, 27, 28 };
@@ -18,19 +20,33 @@ float Kp = 26,Ki = 2,Kd = 4;
 float P = 0,I = 0,D = 0,PID_value = 0,error = 0;
 float previous_error = 0,previous_I = 0;
 int decide = 0;
+int num_det = 0;
 
 float s1 = 1.5,s2 = 2.2,s3 = 3.6,sh = 0.5;
 
 float sigmoid(float x) { return (1/(1+exp(-x))-0.5)*2; }
 
 void get_sensor() {
+  num_det = 0;
   for (auto i = 0; i<n_navi; i++) {
     sensor[i] = digitalRead(hw[i]);
+    num_det += sensor[i];
   }
 }
 
 float navi_loop() {
   get_sensor();
+  if (num_det<2) {
+    stop();
+    rgb_setcolor(255,204,102);
+    beep(8000);
+    delay(200);
+    silent();
+    waiting_for_press();
+    rgb_setcolor(0,0,0);
+    forward(max_speed);
+    delay(1000);
+  }
   /**
   if (sensor[0]==0&&sensor[1]!=0&&sensor[2]!=0&&sensor[3]!=0&&sensor[4]!=0) {
       error = -2;
