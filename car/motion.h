@@ -81,7 +81,7 @@ void turn(float d) {
     l_wheel(max_speed*(1+d/2));
     r_wheel(max_speed*(1-d));
   } else {
-    l_wheel(max_speed*(1-d));
-    r_wheel(max_speed*(1+d/2));
+    l_wheel(max_speed*(1+d));
+    r_wheel(max_speed*(1-d/2));
   }
 }
