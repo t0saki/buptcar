@@ -78,10 +78,10 @@ void run(int d) {
 
 void turn(float d) {
   if (d>=0) {
-    l_wheel(max_speed*(1+d/3));
+    l_wheel(max_speed*(1+d/2));
     r_wheel(max_speed*(1-d));
   } else {
-    l_wheel(max_speed*(1+d));
-    r_wheel(max_speed*(1-d/3));
+    l_wheel(max_speed*(1-d));
+    r_wheel(max_speed*(1+d/2));
   }
 }
