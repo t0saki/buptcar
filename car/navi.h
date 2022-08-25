@@ -61,7 +61,7 @@ float navi_loop() {
     PID_value = (Kp*P)+(Ki*I)+(Kd*D);
     previous_I = I;
     previous_error = error;
-    turn(PID_value/90);
+    turn(PID_value/120);
     Serial.print("");
     Serial.print(PID_value);
     Serial.print(" ");
