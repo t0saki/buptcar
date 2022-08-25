@@ -1,10 +1,10 @@
 #pragma once
 
 // #define max_speed 63
-// extern int max_speed;
+extern int max_speed;
 
-#define UPBOUND_MAXSPEED 160
-#define DOWNBOUND_MAXSPEED 60
+#define UPBOUND_MAXSPEED 167
+#define DOWNBOUND_MAXSPEED 47
 
 #define ULTRA_SONIC_TRIGGER 52 // Sonic trigger
 #define ULTRA_SONIC_ECHO 53    // Sonic echo

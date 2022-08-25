@@ -123,20 +123,20 @@ void updateUniversalCommand() {
   // Fuel control
   case COMMAND_ADD_FUEL:
     if (max_speed <= UPBOUND_MAXSPEED) {
-      max_speed += 5;
+      max_speed += 6;
       Serial.println("Increased max speed to " + String(max_speed));
     }
     else {
-      Serial.println("Max speed is already at maximum");
+      Serial.println("Max speed is already at maximum, at " + String(max_speed));
     }
     break;
   case COMMAND_LOWER_FUEL:
     if (max_speed >= DOWNBOUND_MAXSPEED) {
-      max_speed -= 5;
+      max_speed -= 6; 
       Serial.println("Decreased max speed to " + String(max_speed));
     }
     else {
-      Serial.println("Max speed is already at minimum");
+      Serial.println("Max speed is already at minimum, at " + String(max_speed));
     }
     break;
 }
