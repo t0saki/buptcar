@@ -11,8 +11,8 @@
 char universalCommand = ' ';
 
 void debug() {
-  r_wheel(47);
-  l_wheel(47);
+  r_wheel(255);
+  l_wheel(255);
 }
 
 void setup() {
@@ -36,13 +36,9 @@ void setup() {
   pinin_init_button();
   pinMode(13, OUTPUT);
 
-  // debug();
-  // waiting_for_press();
-
   init_bluetooth();
 }
 
-// forward(255);
 int ls                        = 0;
 int rs                        = 0;
 bool takeControl              = true;
@@ -116,42 +112,6 @@ void Sonar() {
     silent();
   }
 }
-
-// void loop() {
-//   doubleside_bluetooth_check();
-
-//   float sonic_distance = us_distance();
-//   // Serial.print("Sonic dist (cm): ");
-//   // Serial.print(sonic_distance);
-//   // Serial.println();
-
-//   if (digitalRead(BUTTON_IN1) == LOW) {
-//     stop();
-//     delay(1000);
-//     waiting_for_press();
-//   }
-
-//   navi_loop();
-
-//   if (sonic_distance < 10) {
-//     rgb_setcolor(28, 231, 234);
-//     stop();
-//     beep(2000);
-//     delay(200);
-//     silent();
-//     waiting_for_press();
-//   } else {
-//     rgb_setcolor(0, 0, 0);
-//     silent();
-//   }
-//   // forward(255);
-//   // if (sonic_distance < 32)
-//   // {
-//   //     stop();
-//   //     turn(255);
-//   // }
-//   delay(25);
-// }
 
 void loop() {
   updateUniversalCommand();

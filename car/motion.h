@@ -7,10 +7,19 @@ template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
 void r_wheel(int s, bool allowBk = false) {
   s = abs(s) > max_speed * 1.25 ? sgn(s) * max_speed : s;
-  if (!allowBk)
+  if (!allowBk) {
     s = s < 0 ? 0 : s;
-  analogWrite(MOTOR_IN1, s);
-  analogWrite(MOTOR_IN2, 0);
+    analogWrite(MOTOR_IN1, s);
+    analogWrite(MOTOR_IN2, 0);
+  } else {
+    if (s > 0) {
+      analogWrite(MOTOR_IN1, s);
+      analogWrite(MOTOR_IN2, 0);
+    } else {
+      analogWrite(MOTOR_IN1, 0);
+      analogWrite(MOTOR_IN2, -s);
+    }
+  }
 }
 
 void l_wheel(int s, bool allowBk = false) {
@@ -19,10 +28,14 @@ void l_wheel(int s, bool allowBk = false) {
     s = s < 0 ? 0 : s;
     analogWrite(MOTOR_IN3, s);
     analogWrite(MOTOR_IN4, 0);
-  }else{
-    s = s < 0 ? 0 : s;
-    analogWrite(MOTOR_IN3, s);
-    analogWrite(MOTOR_IN4, 0);
+  } else {
+    if (s > 0) {
+      analogWrite(MOTOR_IN3, s);
+      analogWrite(MOTOR_IN4, 0);
+    } else {
+      analogWrite(MOTOR_IN3, 0);
+      analogWrite(MOTOR_IN4, -s);
+    }
   }
 }
 
