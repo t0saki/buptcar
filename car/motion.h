@@ -2,10 +2,11 @@
 
 #include "pins.h"
 
+int max_speed = 110;
 
 template <typename T> int sgn(T val) { return (T(0)<val)-(val<T(0)); }
 
-void r_wheel(int s,bool allowBk = false) {
+void r_wheel(int s, bool allowBk = false) {
   s = abs(s)>max_speed*1.25 ? sgn(s)*max_speed : s;
   if (!allowBk) {
     s = s<0 ? 0 : s;

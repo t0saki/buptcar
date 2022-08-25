@@ -111,11 +111,32 @@ void updateUniversalCommand() {
   case COMMAND_R_WHEEL_BACKWARD_S:
     rs = 0;
     break;
+  
+  // Board LED
   case COMMAND_BOARDLED_ON:
     digitalWrite(13, HIGH);
     break;
   case COMMAND_BOARDLED_OFF:
     digitalWrite(13, LOW);
     break;
-  }
+  
+  // Fuel control
+  case COMMAND_ADD_FUEL:
+    if (max_speed <= UPBOUND_MAXSPEED) {
+      max_speed += 5;
+      Serial.println("Increased max speed to " + String(max_speed));
+    }
+    else {
+      Serial.println("Max speed is already at maximum");
+    }
+    break;
+  case COMMAND_LOWER_FUEL:
+    if (max_speed >= DOWNBOUND_MAXSPEED) {
+      max_speed -= 5;
+      Serial.println("Decreased max speed to " + String(max_speed));
+    }
+    else {
+      Serial.println("Max speed is already at minimum");
+    }
+    break;
 }
