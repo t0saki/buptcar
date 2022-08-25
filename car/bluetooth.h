@@ -22,3 +22,20 @@ void doubleside_bluetooth_check() {
     softSerial.write(x);
   }
 }
+
+char command_check() {
+  char command = ' ';
+
+  if (softSerial.available()) // 检测：【蓝牙】如果数据写入，则执行
+  {
+    command = softSerial.read();
+    if ((int)command == 13 || (int)command == 10) { // 排除干扰（换行符）
+      command = ' ';
+    }
+  }
+
+  if (command != ' ') {
+    Serial.println((int)command); // 打印
+  }
+  return command;
+}

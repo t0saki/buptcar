@@ -1,19 +1,29 @@
 #include "pins.h"
 
-#define max_speed 63
+// #define max_speed 63
+#define max_speed 255
 
-void r_wheel(int s) {
-  s = s > max_speed * 1.25 ? max_speed : s;
-  s = s < 0 ? 0 : s;
+template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
+
+void r_wheel(int s, bool allowBk = false) {
+  s = abs(s) > max_speed * 1.25 ? sgn(s) * max_speed : s;
+  if (!allowBk)
+    s = s < 0 ? 0 : s;
   analogWrite(MOTOR_IN1, s);
   analogWrite(MOTOR_IN2, 0);
 }
 
-void l_wheel(int s) {
-  s = s > max_speed * 1.25 ? max_speed : s;
-  s = s < 0 ? 0 : s;
-  analogWrite(MOTOR_IN3, s);
-  analogWrite(MOTOR_IN4, 0);
+void l_wheel(int s, bool allowBk = false) {
+  s = abs(s) > max_speed * 1.25 ? sgn(s) * max_speed : s;
+  if (!allowBk) {
+    s = s < 0 ? 0 : s;
+    analogWrite(MOTOR_IN3, s);
+    analogWrite(MOTOR_IN4, 0);
+  }else{
+    s = s < 0 ? 0 : s;
+    analogWrite(MOTOR_IN3, s);
+    analogWrite(MOTOR_IN4, 0);
+  }
 }
 
 void pinout_init_motor() {
@@ -25,6 +35,11 @@ void pinout_init_motor() {
   digitalWrite(MOTOR_IN2, LOW);
   digitalWrite(MOTOR_IN3, LOW);
   digitalWrite(MOTOR_IN4, LOW);
+}
+
+void full_control(int ls, int rs) {
+  l_wheel(ls, true);
+  r_wheel(rs, true);
 }
 
 void forward(int s) {

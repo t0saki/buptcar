@@ -2,66 +2,172 @@
 #include "beeper.h"
 #include "bluetooth.h"
 #include "button.h"
+#include "commands.h"
 #include "navi.h"
 #include "pins.h"
 #include "rgb_led.h"
 #include "ultrasonic.h"
 
+char universalCommand = ' ';
+
 void debug() {
-    r_wheel(47);
-    l_wheel(47);
+  r_wheel(47);
+  l_wheel(47);
 }
 
 void setup() {
-    Serial.begin(9600);
+  Serial.begin(9600);
 
-    pinout_init_ultrasonic();
-    pinout_init_rgb();
-    pinout_init_beeper();
-    pinout_init_motor();
-    pinout_init_navigation();
-    pinin_init_button();
+  pinout_init_ultrasonic();
+  pinout_init_rgb();
+  pinout_init_beeper();
+  pinout_init_motor();
+  pinout_init_navigation();
+  pinin_init_button();
 
-    // debug();
+  // debug();
 
-    waiting_for_press();
+  waiting_for_press();
+  pinout_init_ultrasonic();
+  pinout_init_rgb();
+  pinout_init_beeper();
+  pinout_init_motor();
+  pinout_init_navigation();
+  pinin_init_button();
+  pinMode(13, OUTPUT);
 
-    init_bluetooth();
+  // debug();
+  // waiting_for_press();
+
+  init_bluetooth();
 }
 
+// forward(255);
+int ls                        = 0;
+int rs                        = 0;
+bool takeControl              = true;
+const int maxControllingSpeed = 255;
+
+// Update the universal command from bt
+void updateUniversalCommand() {
+  Serial.print(ls);
+  Serial.print(" ");
+  Serial.print(rs);
+
+  Serial.println();
+
+  universalCommand = command_check();
+
+  switch (universalCommand) {
+  case COMMAND_START_LISTEN:
+    takeControl = true;
+    break;
+  case COMMAND_STOP_LISTEN:
+    takeControl = false;
+    break;
+
+    // Left
+  case COMMAND_L_WHEEL_FORWARD:
+    ls = maxControllingSpeed;
+    break;
+  case COMMAND_L_WHEEL_FORWARD_S:
+    ls = 0;
+    break;
+  case COMMAND_L_WHEEL_BACKWARD:
+    ls = -maxControllingSpeed;
+    break;
+  case COMMAND_L_WHEEL_BACKWARD_S:
+    ls = 0;
+    break;
+
+    // Right
+  case COMMAND_R_WHEEL_FORWARD:
+    rs = maxControllingSpeed;
+    break;
+  case COMMAND_R_WHEEL_FORWARD_S:
+    rs = 0;
+    break;
+  case COMMAND_R_WHEEL_BACKWARD:
+    rs = -maxControllingSpeed;
+    break;
+  case COMMAND_R_WHEEL_BACKWARD_S:
+    rs = 0;
+    break;
+  case COMMAND_BOARDLED_ON:
+    digitalWrite(13, HIGH);
+    break;
+  case COMMAND_BOARDLED_OFF:
+    digitalWrite(13, LOW);
+    break;
+  }
+}
+
+void Sonar() {
+  float sonic_distance = us_distance();
+  // Serial.print("Sonic dist (cm): ");
+  // Serial.print(sonic_distance);
+  // Serial.println();
+
+  if (sonic_distance < 32) {
+    rgb_setcolor(28, 231, 234);
+    beep(2000);
+  } else {
+    rgb_setcolor(0, 0, 0);
+    silent();
+  }
+}
+
+// void loop() {
+//   doubleside_bluetooth_check();
+
+//   float sonic_distance = us_distance();
+//   // Serial.print("Sonic dist (cm): ");
+//   // Serial.print(sonic_distance);
+//   // Serial.println();
+
+//   if (digitalRead(BUTTON_IN1) == LOW) {
+//     stop();
+//     delay(1000);
+//     waiting_for_press();
+//   }
+
+//   navi_loop();
+
+//   if (sonic_distance < 10) {
+//     rgb_setcolor(28, 231, 234);
+//     stop();
+//     beep(2000);
+//     delay(200);
+//     silent();
+//     waiting_for_press();
+//   } else {
+//     rgb_setcolor(0, 0, 0);
+//     silent();
+//   }
+//   // forward(255);
+//   // if (sonic_distance < 32)
+//   // {
+//   //     stop();
+//   //     turn(255);
+//   // }
+//   delay(25);
+// }
+
 void loop() {
-    doubleside_bluetooth_check();
+  updateUniversalCommand();
 
-    float sonic_distance = us_distance();
-    // Serial.print("Sonic dist (cm): ");
-    // Serial.print(sonic_distance);
-    // Serial.println();
+  if (takeControl)
+    full_control(ls, rs);
 
-    if (digitalRead(BUTTON_IN1)==LOW) {
-        stop();
-        delay(1000);
-        waiting_for_press();
-    }
+  //   if (digitalRead(BUTTON_IN1) == LOW) {
+  //     stop();
+  //     delay(1000);
+  //     waiting_for_press();
+  //   }
 
-    navi_loop();
+  //   navi_loop();
 
-    if (sonic_distance<10) {
-        rgb_setcolor(28,231,234);
-        stop();
-        beep(2000);
-        delay(200);
-        silent();
-        waiting_for_press();
-    } else {
-        rgb_setcolor(0,0,0);
-        silent();
-    }
-    // forward(255);
-    // if (sonic_distance < 32)
-    // {
-    //     stop();
-    //     turn(255);
-    // }
-    delay(25);
-    // forward(255);
+  Sonar();
+  //   delay(25);
+  // forward(255);
 }

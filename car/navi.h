@@ -139,7 +139,7 @@ float navi_loop() {
   previous_error = error;
   turn(PID_value / 64);
   // Serial.print("");
-  Serial.println(PID_value);
+  // Serial.println(PID_value);
   // Serial.print(" ");
   // Serial.println(sigmoid(PID_value/60));
   // Serial.print(" ");
