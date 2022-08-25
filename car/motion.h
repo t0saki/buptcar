@@ -3,7 +3,7 @@
 #include "pins.h"
 
 // #define max_speed 63
-#define max_speed 255
+#define max_speed 80
 
 template <typename T> int sgn(T val) { return (T(0)<val)-(val<T(0)); }
 
