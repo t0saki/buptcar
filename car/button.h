@@ -8,5 +8,5 @@ void waiting_for_press() {
     while (digitalRead(BUTTON_IN1)==HIGH) {
         delay(10);
     }
-    delay(1000);
+    delay(500);
 }
