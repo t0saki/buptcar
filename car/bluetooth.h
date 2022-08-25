@@ -7,7 +7,8 @@
 // 设置软串口使用的针脚
 SoftwareSerial softSerial(RX, TX);
 
-char universalCommand = ' ';
+char universalCommand     = ' ';
+char universalCommandPrev = ' ';
 
 void serial_init_bluetooth() {
   softSerial.begin(9600); //设定软串口波特率
@@ -39,33 +40,48 @@ char command_check() {
     }
   }
 
-  if (command != ' ') {
-    Serial.println((int)command); // 打印
-  }
   return command;
 }
 
 int ls                        = 0;
 int rs                        = 0;
 bool takeControl              = true;
+bool takeControlPrev          = false;
 const int maxControllingSpeed = max_speed;
 
 // Update the universal command from bt
 void updateUniversalCommand() {
-  Serial.print(ls);
-  Serial.print(" ");
-  Serial.print(rs);
+  // Serial.print(ls);
+  // Serial.print(" ");
+  // Serial.print(rs);
 
-  Serial.println();
+  // Serial.println();
 
   universalCommand = command_check();
+  if (universalCommand != universalCommandPrev) {
+    universalCommandPrev = universalCommand;
+    if (universalCommand != ' ') {
+      Serial.print("Received command: ");
+      Serial.print(universalCommand);
+
+      Serial.println();
+    }
+  }
 
   switch (universalCommand) {
   case COMMAND_START_LISTEN:
     takeControl = true;
+    if (takeControl != takeControlPrev) {
+      takeControlPrev = takeControl;
+      Serial.println("Changed control mode to manual");
+    }
     break;
   case COMMAND_STOP_LISTEN:
     takeControl = false;
+    if (takeControl != takeControlPrev) {
+      takeControlPrev = takeControl;
+      Serial.println("Changed control mode to auto route");
+    }
     break;
 
     // Left

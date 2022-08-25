@@ -33,10 +33,6 @@ void setup() {
 
   // debug();
   pinMode(13, OUTPUT);
-
-  // waiting_for_press();
-  waiting_for_press();
-  pinMode(13, OUTPUT);
 }
 
 void loop() {
@@ -44,18 +40,17 @@ void loop() {
 
   if (takeControl) {
     full_control(ls, rs);
-  } else
-    stop();
+  } else {
+    // if (digitalRead(BUTTON_IN1) == LOW) {
+    //   stop();
+    //   delay(1000);
+    //   waiting_for_press();
+    // }
 
-  Sonar();
+    navi_loop();
+    Sonar();
 
-  if (digitalRead(BUTTON_IN1) == LOW) {
-    stop();
-    delay(1000);
-    waiting_for_press();
+    delay(15);
+    // forward(255);
   }
-
-  navi_loop();
-  delay(15);
-  // forward(255);
 }
