@@ -46,7 +46,7 @@ void Sonar() {
             rgb_setcolor(0,0,255);
             break;
         default:
-            rgb_setcolor(255,255,255);
+            rgb_setcolor(0,0,0);
             break;
         }
         waiting_for_press();
