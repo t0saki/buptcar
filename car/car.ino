@@ -35,6 +35,8 @@ void setup() {
   pinMode(13, OUTPUT);
 
   // waiting_for_press();
+  waiting_for_press();
+  pinMode(13, OUTPUT);
 }
 
 void loop() {
