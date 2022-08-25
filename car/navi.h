@@ -19,7 +19,7 @@ float P = 0,I = 0,D = 0,PID_value = 0,error = 0;
 float previous_error = 0,previous_I = 0;
 int decide = 0;
 
-float s1 = 1.5,s2 = 2.2,s3 = 3.6;
+float s1 = 1.5,s2 = 2.2,s3 = 3.6,sh = 0.5;
 
 float sigmoid(float x) { return (1/(1+exp(-x))-0.5)*2; }
 
@@ -117,11 +117,15 @@ float navi_loop() {
   } else if (!sensor[3]) {
     error = s1;
   } else if (!sensor[2]) {
-    error = 0;
+    if (error<0) {
+      error = sh;
+    } else {
+      error = -sh;
+    }
   } else {
-    if (error==-2) {
+    if (error==-s2) {
       error = -s3;
-    } else if (error==2) {
+    } else if (error==s2) {
       error = s3;
     } else {
       error = error;

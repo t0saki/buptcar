@@ -50,15 +50,15 @@ void loop() {
         full_control(ls,rs);
     }
 
-    //   if (digitalRead(BUTTON_IN1) == LOW) {
-    //     stop();
-    //     delay(1000);
-    //     waiting_for_press();
-    //   }
+    if (digitalRead(BUTTON_IN1)==LOW) {
+        stop();
+        delay(1000);
+        waiting_for_press();
+    }
 
-    //   navi_loop();
+    navi_loop();
 
     Sonar();
-    delay(25);
+    delay(15);
     // forward(255);
 }

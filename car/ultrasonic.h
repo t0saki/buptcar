@@ -29,6 +29,7 @@ void Sonar() {
     // Serial.println();
 
     if (sonic_distance<10) {
+        stop();
         rgb_setcolor(102,204,255);
         beep(2000);
         delay(200);
