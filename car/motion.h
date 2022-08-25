@@ -3,14 +3,14 @@
 #define max_speed 63
 
 void r_wheel(int s) {
-    s = s>max_speed ? max_speed : s;
+    s = s>max_speed*1.25 ? max_speed : s;
     s = s<0 ? 0 : s;
     analogWrite(MOTOR_IN1,s);
     analogWrite(MOTOR_IN2,0);
 }
 
 void l_wheel(int s) {
-    s = s>max_speed ? max_speed : s;
+    s = s>max_speed*1.25 ? max_speed : s;
     s = s<0 ? 0 : s;
     analogWrite(MOTOR_IN3,s);
     analogWrite(MOTOR_IN4,0);
@@ -50,10 +50,10 @@ void run(int d) {
 
 void turn(float d) {
     if (d>=0) {
-        l_wheel(max_speed*(1+d/2));
+        l_wheel(max_speed*(1+d/3));
         r_wheel(max_speed*(1-d));
     } else {
         l_wheel(max_speed*(1+d));
-        r_wheel(max_speed*(1-d/2));
+        r_wheel(max_speed*(1-d/3));
     }
 }
