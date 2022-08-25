@@ -10,6 +10,12 @@
 #define RGB_R 43 // RGB - Red
 #define RGB_G 44 // RGB - Green
 
+#define S0 6 // Color sensor
+#define S1 5
+#define S2 3
+#define S3 4
+#define sensorOut 2
+
 #define DEBUG_BOARD_LED 13 // On board LED
 
 #define BEEPER 45 // Beeper LOW ACTIVE
