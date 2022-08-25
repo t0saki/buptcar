@@ -20,9 +20,9 @@ void navi_loop() {
         sensor[i] = digitalRead(hw[i]);
         turn_rate += -85*sensor[i]*(i-2);
 
-        Serial.print(sensor[i]);
-        Serial.print(" ");
+        // Serial.print(sensor[i]);
+        // Serial.print(" ");
     }
-    Serial.println(turn_rate);
+    // Serial.println(turn_rate);
     turn(turn_rate);
 }
