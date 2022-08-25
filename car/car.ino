@@ -30,12 +30,6 @@ void setup() {
 
 
     waiting_for_press();
-    pinout_init_ultrasonic();
-    pinout_init_rgb();
-    pinout_init_beeper();
-    pinout_init_motor();
-    pinout_init_navigation();
-    pinin_init_button();
     pinMode(13,OUTPUT);
 
     init_bluetooth();
