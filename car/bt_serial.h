@@ -1,3 +1,4 @@
+#pragma once
 #include <SoftwareSerial.h> 
 SoftwareSerial MyBlue(19,18); // RX, TX
 

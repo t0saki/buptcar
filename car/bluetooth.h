@@ -1,8 +1,15 @@
+#pragma once
 #include "pins.h"
 #include <SoftwareSerial.h>
+#include "motion.h"
+#include "commands.h"
+
 
 // 设置软串口使用的针脚
-SoftwareSerial softSerial(RX, TX);
+SoftwareSerial softSerial(RX,TX);
+
+
+char universalCommand = ' ';
 
 void init_bluetooth() {
   softSerial.begin(9600); //设定软串口波特率
@@ -17,7 +24,7 @@ void doubleside_bluetooth_check() {
   }
   if (Serial.available()) //检测：【串口】如果数据写入，则执行
   {
-    digitalWrite(13, !digitalRead(13));
+    digitalWrite(13,!digitalRead(13));
     int x = Serial.read(); //把写入的数据给到自定义变量x
     softSerial.write(x);
   }
@@ -29,13 +36,72 @@ char command_check() {
   if (softSerial.available()) // 检测：【蓝牙】如果数据写入，则执行
   {
     command = softSerial.read();
-    if ((int)command == 13 || (int)command == 10) { // 排除干扰（换行符）
+    if ((int)command==13||(int)command==10) { // 排除干扰（换行符）
       command = ' ';
     }
   }
 
-  if (command != ' ') {
+  if (command!=' ') {
     Serial.println((int)command); // 打印
   }
   return command;
+}
+
+int ls = 0;
+int rs = 0;
+bool takeControl = true;
+const int maxControllingSpeed = 255;
+
+// Update the universal command from bt
+void updateUniversalCommand() {
+  Serial.print(ls);
+  Serial.print(" ");
+  Serial.print(rs);
+
+  Serial.println();
+
+  universalCommand = command_check();
+
+  switch (universalCommand) {
+  case COMMAND_START_LISTEN:
+    takeControl = true;
+    break;
+  case COMMAND_STOP_LISTEN:
+    takeControl = false;
+    break;
+
+    // Left
+  case COMMAND_L_WHEEL_FORWARD:
+    ls = maxControllingSpeed;
+    break;
+  case COMMAND_L_WHEEL_FORWARD_S:
+    ls = 0;
+    break;
+  case COMMAND_L_WHEEL_BACKWARD:
+    ls = -maxControllingSpeed;
+    break;
+  case COMMAND_L_WHEEL_BACKWARD_S:
+    ls = 0;
+    break;
+
+    // Right
+  case COMMAND_R_WHEEL_FORWARD:
+    rs = maxControllingSpeed;
+    break;
+  case COMMAND_R_WHEEL_FORWARD_S:
+    rs = 0;
+    break;
+  case COMMAND_R_WHEEL_BACKWARD:
+    rs = -maxControllingSpeed;
+    break;
+  case COMMAND_R_WHEEL_BACKWARD_S:
+    rs = 0;
+    break;
+  case COMMAND_BOARDLED_ON:
+    digitalWrite(13,HIGH);
+    break;
+  case COMMAND_BOARDLED_OFF:
+    digitalWrite(13,LOW);
+    break;
+  }
 }

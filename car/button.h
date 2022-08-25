@@ -1,3 +1,4 @@
+#pragma once
 #include "pins.h"
 
 void pinin_init_button() {
@@ -10,3 +11,4 @@ void waiting_for_press() {
     }
     delay(500);
 }
+
