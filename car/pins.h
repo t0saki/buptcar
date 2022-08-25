@@ -3,6 +3,9 @@
 #define ULTRA_SONIC_TRIGGER 52 // Sonic trigger
 #define ULTRA_SONIC_ECHO 53    // Sonic echo
 
+#define RX 10 // Bluetooth Serial
+#define TX 9
+
 #define RGB_B 42 // RGB - Blue
 #define RGB_R 43 // RGB - Red
 #define RGB_G 44 // RGB - Green

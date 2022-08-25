@@ -3,7 +3,7 @@
 
 const int n_navi = 5;
 int hw[n_navi] = { 24, 25, 26, 27, 28 };
-const int errorpins[n_navi]{ -3,-0.75,0,0.75,3 };
+const int errorpins[n_navi]{ -3, -0.75, 0, 0.75, 3 };
 
 void pinout_init_navigation() {
     for (auto i = 0; i<n_navi; i++) {
@@ -53,7 +53,7 @@ float navi_loop() {
     error = 0;
     for (auto i = 0; i<n_navi; i++) {
         error -= sensor[i]*errorpins[i];
-        Serial.print(sensor[i]);
+        // Serial.print(sensor[i]);
     }
     P = error;
     I = I+previous_I;
@@ -61,12 +61,11 @@ float navi_loop() {
     PID_value = (Kp*P)+(Ki*I)+(Kd*D);
     previous_I = I;
     previous_error = error;
-    turn(PID_value/120);
+    turn(PID_value/90);
     Serial.print("");
     Serial.print(PID_value);
     Serial.print(" ");
     Serial.println(error);
 
     return PID_value;
-
 }
