@@ -42,10 +42,27 @@ float navi_loop() {
     beep(8000);
     delay(200);
     silent();
+    //waiting_for_press();
+    delay(200);
+    Serial.println("getting color");
+    switch (get_color()) {
+    case 0:
+      rgb_setcolor(255,0,0);
+      break;
+    case 1:
+      rgb_setcolor(0,255,0);
+      break;
+    case 2:
+      rgb_setcolor(0,0,255);
+      break;
+    default:
+      rgb_setcolor(0,0,0);
+      break;
+    }
     waiting_for_press();
-    rgb_setcolor(0,0,0);
+    Serial.println("setting color");
     forward(max_speed);
-    delay(1000);
+    delay(700);
   }
   /**
   if (sensor[0]==0&&sensor[1]!=0&&sensor[2]!=0&&sensor[3]!=0&&sensor[4]!=0) {
