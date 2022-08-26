@@ -1,5 +1,6 @@
 #pragma once
 #include "pins.h"
+#include "lcd_display.h"
 
 int frequency = 0;
 const static String colorName[3] = { "Red", "Green", "Blue" };
@@ -67,6 +68,9 @@ int get_color() {
     //   Serial.print("The current color is ");
     //   Serial.print(colorName[colorId]);
     float ratio = g/b;
+    lcd.clear();
+    set_string(0,"The current color is ");
+    set_string(1,colorName[colorId]);
 
     // Serial.println(ratio);
 

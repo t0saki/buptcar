@@ -34,7 +34,9 @@ void Sonar() {
         beep(2000);
         delay(200);
         silent();
+        location = 0;
+        lcd.clear();
+        set_string(0,"Block detected!");
         waiting_for_press();
-
     }
 }

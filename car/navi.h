@@ -38,6 +38,7 @@ float navi_loop() {
   get_sensor();
   if (num_det<2) {
     stop();
+    location++;
     rgb_setcolor(255,204,102);
     beep(8000);
     delay(200);

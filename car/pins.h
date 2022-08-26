@@ -2,7 +2,7 @@
 
 
 // #define max_speed 63
-#define max_speed 111
+#define max_speed 74
 
 #define ULTRA_SONIC_TRIGGER 52 // Sonic trigger
 #define ULTRA_SONIC_ECHO 53    // Sonic echo
@@ -34,3 +34,5 @@
 #define BUTTON_IN1 34 // Button
 
 extern int hw[5];
+
+int location = 0;
