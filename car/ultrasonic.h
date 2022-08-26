@@ -35,6 +35,7 @@ void Sonar() {
         delay(200);
         silent();
         waiting_for_press();
+        Serial.println("getting color");
         switch (get_color()) {
         case 0:
             rgb_setcolor(255,0,0);
@@ -50,7 +51,6 @@ void Sonar() {
             break;
         }
         waiting_for_press();
-    } else {
-        silent();
+        Serial.println("setting color");
     }
 }

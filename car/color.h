@@ -68,7 +68,7 @@ int get_color() {
     //   Serial.print(colorName[colorId]);
     float ratio = g/b;
 
-    Serial.println(ratio);
+    // Serial.println(ratio);
 
     return colorId;
 }

@@ -2,7 +2,7 @@
 
 
 // #define max_speed 63
-#define max_speed 107
+#define max_speed 111
 
 #define ULTRA_SONIC_TRIGGER 52 // Sonic trigger
 #define ULTRA_SONIC_ECHO 53    // Sonic echo
